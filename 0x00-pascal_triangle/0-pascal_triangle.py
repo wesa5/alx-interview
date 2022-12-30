@@ -6,14 +6,15 @@ def pascal_triangle(n):
     the Pascal's triangle of a given integer.
     '''
 
-    lists = []
-    if n == 0:
-        return lists
-    for i in range(n):
-        lists.append([])
-        lists[i].append(1)
-        if (i > 0):
-            for j in range(1, i):
-                lists[i].append(lists[i - 1][j - 1] + lists[i - 1][j])
-            lists[i].append(1)
-    return lists
+    if n <= 0:
+        return []
+
+    triangle = []
+    row = []
+    prev_row = []
+    for i in range(0, n + 1):
+        row = [j > 0 and j < i - 1 and i > 2 and prev_row[j-1] +
+               prev_row[j] or 1 for j in range(0, i)]
+        prev_row = row
+        triangle += [row]
+    return triangle[1:]
