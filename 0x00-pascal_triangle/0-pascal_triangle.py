@@ -2,19 +2,37 @@
 '''Module to return pascal triangle'''
 
 def pascal_triangle(n):
-    '''Creates a list of lists of integers representing
-    the Pascal's triangle of a given integer.
-    '''
+    """
+    Creates a list of lists of integers representing Pascal's triangle
+    parameters:
+        n [int]:
+            the number of rows of Pascal's triangle to recreate
+    return:
+        [list of lists of ints]:
+            representation of Pascal's triangle
+    """
 
-    if n <= 0:
-        return []
+     
+    if type(n) is not int:
+        raise TypeError("n must be an integer")
 
     triangle = []
-    row = []
-    prev_row = []
-    for i in range(0, n + 1):
-        row = [j > 0 and j < i - 1 and i > 2 and prev_row[j-1] +
-               prev_row[j] or 1 for j in range(0, i)]
-        prev_row = row
-        triangle += [row]
-    return triangle[1:]
+
+    if n <= 0:
+        return triangle
+    previous = [1]
+    for index in range(n):
+        rowlist = []
+        if index == 0:
+            rowlist = [1]
+        else:
+            for i in range(index + 1):
+                if i == 0:
+                    rowlist.append(0 + previous[i])
+                elif i == (index):
+                    rowlist.append(previous[i - 1] + 0)
+                else:
+                    rowlist.append(previous[i - 1] + previous[i])
+        previous = rowlist
+        triangle.append(rowlist)
+    return triangle
